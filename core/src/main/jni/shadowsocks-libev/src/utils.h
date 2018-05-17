@@ -32,15 +32,15 @@
 #define SS_ADDRSTRLEN (INET6_ADDRSTRLEN + PORTSTRLEN + 1)
 
 #ifdef __ANDROID__
-
+void _log_write(const char* file, size_t line,const char *fun,int level,const char *fmt, ...);
 #include <android/log.h>
 #define USE_TTY()
 #define USE_SYSLOG(ident, _cond)
 #define LOGI(...)                                                \
-    ((void)__android_log_print(ANDROID_LOG_DEBUG, "shadowsocks", \
+    ((void)_log_write(__FILE__,__LINE__,__FUNCTION__,ANDROID_LOG_DEBUG, \
                                __VA_ARGS__))
 #define LOGE(...)                                                \
-    ((void)__android_log_print(ANDROID_LOG_ERROR, "shadowsocks", \
+    ((void)_log_write(__FILE__,__LINE__,__FUNCTION__,ANDROID_LOG_ERROR, \
                                __VA_ARGS__))
 
 #else // not __ANDROID__

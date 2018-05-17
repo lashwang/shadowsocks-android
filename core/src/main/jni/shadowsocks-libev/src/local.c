@@ -1538,6 +1538,7 @@ main(int argc, char **argv)
             break;
         case 'c':
             conf_path = optarg;
+            LOGI("config path is:%s",conf_path);
             break;
         case 'i':
             iface = optarg;

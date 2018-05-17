@@ -515,3 +515,25 @@ get_default_conf(void)
     return "config.json";
 #endif
 }
+
+
+void _log_write(const char* file, size_t line,const char *fun,int level,const char *fmt, ...){
+    /**
+     * Extract source file base name
+     */
+#define OC_MAX_LOG_MESSAGE_LENGTH 1024
+    char tag[256];
+    char message[OC_MAX_LOG_MESSAGE_LENGTH] = "";
+    const char *basefile = strrchr(file,'/');
+    basefile = basefile ? basefile + 1 : file;
+
+    sprintf(tag,"shadowsocks(%s %d in %s())",basefile,line,fun);
+    va_list         args;
+    va_start(args, fmt);
+    vsnprintf(message, OC_MAX_LOG_MESSAGE_LENGTH - 2, fmt, args);
+    va_end(args);
+
+    __android_log_write(level,tag,message);
+
+
+}
